@@ -1,0 +1,108 @@
+# FindAstate.cmake - Find Astate library
+# This module defines the following variables:
+#   ASTATE_FOUND - True if Astate is found
+#   ASTATE_INCLUDE_DIRS - Astate include directories
+#   ASTATE_LIBRARIES - Astate libraries
+#   ASTATE_VERSION - Astate version
+
+find_path(ASTATE_INCLUDE_DIR
+    NAMES astate_common
+    PATHS
+        @CMAKE_INSTALL_PREFIX@/include
+        /usr/local/include
+        /usr/include
+    PATH_SUFFIXES astate
+)
+
+find_library(ASTATE_COMMON_LIBRARY
+    NAMES astate_common
+    PATHS
+        @CMAKE_INSTALL_PREFIX@/lib
+        /usr/local/lib
+        /usr/lib
+)
+
+find_library(ASTATE_CORE_LIBRARY
+    NAMES astate_core
+    PATHS
+        @CMAKE_INSTALL_PREFIX@/lib
+        /usr/local/lib
+        /usr/lib
+)
+
+find_library(ASTATE_CLIENT_LIBRARY
+    NAMES astate_client
+    PATHS
+        @CMAKE_INSTALL_PREFIX@/lib
+        /usr/local/lib
+        /usr/lib
+)
+
+find_library(ASTATE_PROTOCOL_LIBRARY
+    NAMES astate_protocol
+    PATHS
+        @CMAKE_INSTALL_PREFIX@/lib
+        /usr/local/lib
+        /usr/lib
+)
+
+# Set variables
+set(ASTATE_INCLUDE_DIRS ${ASTATE_INCLUDE_DIR})
+set(ASTATE_LIBRARIES
+    ${ASTATE_COMMON_LIBRARY}
+    ${ASTATE_CORE_LIBRARY}
+    ${ASTATE_CLIENT_LIBRARY}
+    ${ASTATE_PROTOCOL_LIBRARY}
+)
+
+# Handle REQUIRED and QUIET arguments
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Astate
+    REQUIRED_VARS ASTATE_INCLUDE_DIR ASTATE_COMMON_LIBRARY
+    VERSION_VAR ASTATE_VERSION
+)
+
+# Create imported targets
+if(ASTATE_FOUND AND NOT TARGET astate::)
+    add_library(astate:: UNKNOWN IMPORTED)
+    set_target_properties(astate:: PROPERTIES
+        IMPORTED_LOCATION "${ASTATE_COMMON_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${ASTATE_INCLUDE_DIR}"
+    )
+endif()
+
+if(ASTATE_FOUND AND NOT TARGET Astate::Core)
+    add_library(Astate::Core UNKNOWN IMPORTED)
+    set_target_properties(Astate::Core PROPERTIES
+        IMPORTED_LOCATION "${ASTATE_CORE_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${ASTATE_INCLUDE_DIR}"
+        INTERFACE_LINK_LIBRARIES "astate::"
+    )
+endif()
+
+if(ASTATE_FOUND AND NOT TARGET Astate::Client)
+    add_library(Astate::Client UNKNOWN IMPORTED)
+    set_target_properties(Astate::Client PROPERTIES
+        IMPORTED_LOCATION "${ASTATE_CLIENT_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${ASTATE_INCLUDE_DIR}"
+        INTERFACE_LINK_LIBRARIES "astate::;Astate::Protocol"
+    )
+endif()
+
+if(ASTATE_FOUND AND NOT TARGET Astate::Protocol)
+    add_library(Astate::Protocol UNKNOWN IMPORTED)
+    set_target_properties(Astate::Protocol PROPERTIES
+        IMPORTED_LOCATION "${ASTATE_PROTOCOL_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${ASTATE_INCLUDE_DIR}"
+        INTERFACE_LINK_LIBRARIES "astate::"
+    )
+endif()
+
+# Mark variables as advanced
+mark_as_advanced(
+    ASTATE_INCLUDE_DIR
+    ASTATE_COMMON_LIBRARY
+    ASTATE_CORE_LIBRARY
+    ASTATE_CLIENT_LIBRARY
+    ASTATE_PROTOCOL_LIBRARY
+)

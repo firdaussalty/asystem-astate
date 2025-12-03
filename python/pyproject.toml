@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astate"
+version = "0.1.0"
+description = "Python interface for Astate library"
+requires-python = ">=3.9"
+authors = [
+    {name = "Astate Team"}
+]
+dependencies = [
+    "torch>=1.0.0",
+    "numpy>=1.19.0",
+]

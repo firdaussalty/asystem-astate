@@ -1,0 +1,137 @@
+HeaderFilterRegex: '(^|.*/)(astate[^/]*\.(h|hpp))$'
+
+Checks: >
+  *,
+  -abseil-string-find-str-contains,
+  -altera-*,
+  -android-*,
+  -boost-use-ranges,
+  -cert-dcl16-c,
+  -cert-arr39-c,
+  -cert-err58-cpp,
+  -clang-analyzer-core.BitwiseShift,
+  -clang-analyzer-optin.performance.Padding,
+  -clang-analyzer-security.ArrayBound,
+  -clang-analyzer-cplusplus.NewDeleteLeaks,
+  -clang-analyzer-unix.Malloc,
+  -darwin-*,
+  -fuchsia-*,
+  -zircon-*,
+  -llvm-*,
+  -llvmlibc-*,
+  -misc-const-correctness,
+  -misc-include-cleaner,
+  -misc-no-recursion,
+  -misc-non-private-member-variables-in-classes,
+  -misc-use-anonymous-namespace,
+  -misc-use-internal-linkage,
+  -modernize-avoid-c-arrays,
+  -modernize-use-trailing-return-type,
+  -modernize-use-designated-initializers,
+  -modernize-use-scoped-lock,
+  -modernize-use-integer-sign-comparison,
+  -portability-simd-intrinsics,
+  -portability-avoid-pragma-once,
+  -portability-template-virtual-member-function,
+  -bugprone-lambda-function-name,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-avoid-c-arrays,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-special-member-functions,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-macro-parentheses,
+  -bugprone-branch-clone,
+  -hicpp-special-member-functions,
+  -hicpp-avoid-c-arrays,
+  -cppcoreguidelines-pro-type-reinterpret-cast,
+  -readability-magic-numbers,
+  -hicpp-signed-bitwise,
+  -readability-function-cognitive-complexity,
+  -cert-env33-c,
+  -concurrency-mt-unsafe,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -readability-identifier-length,
+  -hicpp-no-malloc,
+  -google-runtime-int,
+  -cppcoreguidelines-no-malloc,
+  -hicpp-no-array-decay,
+  -cppcoreguidelines-avoid-const-or-ref-data-members,
+  -cert-err33-c,
+  -performance-no-int-to-ptr,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cert-msc51-cpp,
+  -cppcoreguidelines-pro-type-vararg,
+  -hicpp-vararg,
+  -cert-err34-c,
+  -cppcoreguidelines-non-private-member-variables-in-classes,
+  -cert-msc30-c,
+  -cert-msc32-c,
+  -cert-msc50-cpp,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-narrowing-conversions,
+  -cppcoreguidelines-pro-type-const-cast,
+  -ovl_no_viable_function_in_call,
+  -readability-convert-member-functions-to-static,
+
+
+WarningsAsErrors: '*'
+
+ExtraArgs:
+  - '-Wno-unknown-pragmas'
+  - '-Wno-unused-command-line-argument'
+
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+  - key: readability-identifier-naming.UnionCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypeTemplateParameterCase
+    value: CamelCase
+  - key: readability-identifier-naming.TemplateTemplateParameterCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.LocalVariableCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterPackCase
+    value: lower_case
+  - key: readability-identifier-naming.TemplateParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.StaticConstantCase
+    value: aNy_CasE
+
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.ProtectedMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: "_"
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: "_"
+
+  - key: readability-identifier-naming.PublicMemberCase
+    value: lower_case
+
+  - key: readability-identifier-naming.MethodCase
+    value: CamelCase
+  - key: readability-identifier-naming.PrivateMethodCase
+    value: CamelCase
+  - key: readability-identifier-naming.ProtectedMethodCase
+    value: CamelCase
+  - key: readability-identifier-naming.PublicMethodCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+
+  - key: cppcoreguidelines-avoid-do-while.IgnoreMacros
+    value: "true"

@@ -1,0 +1,19 @@
+syntax="proto2";
+
+option cc_generic_services = true;
+
+package astate.proto;
+
+message TransferData {
+  required string request_name = 1;
+  optional bytes data = 2;
+}
+
+service RpcTransferService {
+  rpc Send(TransferData) returns (StatusReply);
+}
+
+message StatusReply {
+  required int32 code = 1;  // 0 is ok;
+  optional  string message = 2;
+}
