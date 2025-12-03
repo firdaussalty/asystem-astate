@@ -17,18 +17,21 @@ To address the challenges of large-scale RL weight synchronization, AState provi
 As shown in Figure 1, AState’s architecture is organized into three layers:
 
 - **API Layer**
-Provides tensor-native interfaces that integrate quickly with different training/inference frameworks. The APIs expose one-sided read/write semantics, naturally supporting more complex or asynchronous computation and data exchange flows.
+
+    Provides tensor-native interfaces that integrate quickly with different training/inference frameworks. The APIs expose one-sided read/write semantics, naturally supporting more complex or asynchronous computation and data exchange flows.
 
 - **Service Layer**
-To support multiple deployment patterns and pipeline modes with a single API, AState introduces a middle service layer that offers different weight sync services and protocols, shielding upper layers from the complexity of exchange and scheduling. For example:
-  - In co-located training/inference, inference nodes can pull weights on demand.
-  - In off-policy setups, training and inference can perform fully asynchronous weight updates.
-The service layer also provides tensor sharding management with zero redundancy and synchronization plans that are aware of RL topology and cluster layout.
+
+    To support multiple deployment patterns and pipeline modes with a single API, AState introduces a middle service layer that offers different weight sync services and protocols, shielding upper layers from the complexity of exchange and scheduling. For example:
+    - In co-located training/inference, inference nodes can pull weights on demand.
+    - In off-policy setups, training and inference can perform fully asynchronous weight updates.
+    The service layer also provides tensor sharding management with zero redundancy and synchronization plans that are aware of RL topology and cluster layout.
 
 - **Transport Layer**
-This foundational layer provides efficient, scalable data transfer capabilities, including:
-  - NUMA topology and affinity awareness;
-  - Multiple transport backends (PCIe / NVLink / RoCE / InfiniBand, etc.) to exploit the full potential of underlying hardware bandwidth and topology.
+
+    This foundational layer provides efficient, scalable data transfer capabilities, including:
+    - NUMA topology and affinity awareness;
+    - Multiple transport backends (PCIe / NVLink / RoCE / InfiniBand, etc.) to exploit the full potential of underlying hardware bandwidth and topology.
 
 ## Features
 
@@ -137,7 +140,9 @@ Typical usage in RL:
 $^?$  It may not be the optimal solution. For example, the co-located mode introduces an additional GPU memory offload pipeline; moreover, due to NCCL’s bilateral semantics, training and inference must be synchronized during data transfer, which can effectively cause an off‑policy scheme to degenerate into on‑policy.
 
 $^1$ 100B(FP16) [Training-Inference Parallel Configuration: train: tp=1, etp=1; infer: tp=4];
+
 $^1$ 1T(FP8) [Training-Inference Parallel Configuration: train: tp=1, etp=1; infer: tp=16].
+
 $^2$ Time proportion is excessively long, rendering it nearly unusable.
 
 ## Roadmap (High-level)
