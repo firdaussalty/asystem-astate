@@ -345,7 +345,7 @@ add_library(UCX::ucx INTERFACE IMPORTED)
 
 set_target_properties(UCX::ucx PROPERTIES
     INTERFACE_LINK_LIBRARIES
-        "UCX::ucp;UCX::uct;UCX::ucm;UCX::ucs;bfd;iberty;pthread;dl;rt"
+        "UCX::ucp;UCX::uct;UCX::ucm;UCX::ucs;bfd;pthread;dl;rt"
 )
 
 # ========================
